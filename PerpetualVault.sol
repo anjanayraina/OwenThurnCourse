@@ -14,10 +14,10 @@ contract PerpetualVault is   ERC20 {
     function approve(address spender , uint amount) override public  returns(bool){
 
     }
-    function balanceOf(address account) external view returns(uint256){
+    function balanceOf(address account) override public view returns(uint256){
 
     }
-    function transfer(address to , uint amount) external returns(bool){
+    function transfer(address to , uint amount) override public returns(bool){
 
     }
 
