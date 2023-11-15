@@ -1,36 +1,31 @@
-import "https://github.com/Rari-Capital/solmate/blob/main/src/tokens/ERC20.sol";
-pragma solidity 0.8.7;
+
+pragma solidity ^0.8.20;
 
 // testnet oracle : https://sepolia.etherscan.io/address/0x6090149792dAAeE9D1D568c9f9a6F6B46AA29eFD
 // ETH/USDC pool
-contract PerpetualVault is ERC20 {
+// how is the value of a share of the pool set ??
+
+import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
+
+contract PerpetualVault  is ERC4626{
+    using Counters for Counters.Counter;
+    Counters.Counter private currentPositionID;
     uint8 public constant MAX_LEVERAGE = 20;
-    ERC20 public LPToken;
+    IERC20 public BTCToken;
     
     struct Position {
         address creator;
         uint collateral;
         bool long;
         uint size;
+        uint256 positionID;
     }
-    constructor(address tokenAddress , string memory _name , string memory _symbol) ERC20(_name , _symbol , 18){
-        LPToken = ERC20(tokenAddress);
+    constructor(IERC20 LPTokenAddress ,IERC20 BTCTokenAddress , string memory name , string memory symbol) ERC4626(LPTokenAddress) ERC20(name , symbol){
+        BTCToken = BTCTokenAddress;
+        currentPositionID.increment();
     }
     
-    function transferFrom(address from , address to , uint amount) override public returns (bool){
-
-    }
-    function approve(address spender , uint amount) override public  returns(bool){
-
-    }
-
-    function transfer(address to , uint amount) override public returns(bool){
-
-    }
-
-    function balanceOf(address account) override public view returns(uint256){
-
-    }
 
 
     
